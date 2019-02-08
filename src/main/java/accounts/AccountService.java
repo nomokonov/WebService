@@ -1,8 +1,10 @@
 package accounts;
 
 import dbService.DBException;
+import dbService.DBService;
 import dbService.dao.UsersDAO;
 import dbService.dataSets.UsersDataSet;
+import org.h2.bnf.context.DbSchema;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
@@ -19,31 +21,30 @@ import java.util.Map;
  *         Описание курса и лицензия: https://github.com/vitaly-chibrikov/stepic_java_webserver
  */
 public class AccountService {
-    private final UsersDAO usersDAO;
+    private final DBService dbService;
     private final Map<String, UsersDataSet> sessionIdToProfile;
-    private final SessionFactory sessionFactory;
 
-    public AccountService() {
-         this.usersDAO = new UsersDAO();
+    public AccountService(DBService dbService) {
+         this.dbService = dbService;
         sessionIdToProfile = new HashMap<>();
-        sessionFactory = createSessionFactory(configuration);
     }
 
     public void addNewUser(String name) {
 //        loginToProfile.put(userProfile.getLogin(), userProfile);
         try {
-
-            long userId = usersDAO.insertUser(name);
-            System.out.println("Added user id: " + userId);
-            UsersDataSet dataSet = usersDAO.get(userId);
-            System.out.println("User data set: " + dataSet);
+            dbService.addUser(name);
         } catch (DBException e) {
             e.printStackTrace();
         }
     }
 
     public UsersDataSet get(String login) {
-        return usersDAO.get(login);
+        try {
+            return dbService.getUser(login);
+        } catch (DBException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public UsersDataSet getUserBySessionId(String sessionId) {

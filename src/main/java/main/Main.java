@@ -2,9 +2,7 @@ package main;
 
 
 import accounts.AccountService;
-import dbService.DBException;
 import dbService.DBService;
-import dbService.dataSets.UsersDataSet;
 import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.HandlerList;
@@ -29,8 +27,9 @@ public class Main {
         dbService.printConnectInfo();
 
 
+
 //webapi
-        AccountService accountService = new AccountService();
+        AccountService accountService = new AccountService(dbService);
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
         context.addServlet(new ServletHolder(new hello()), "/");
         context.addServlet(new ServletHolder(new SignUpServlet(accountService)), "/signup");
@@ -48,7 +47,6 @@ public class Main {
         server.start();
         System.out.println("Server started");
         server.join();
-
 
 
     }
