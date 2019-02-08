@@ -25,9 +25,6 @@ public class Main {
         //  DB
         DBService dbService = new DBService();
         dbService.printConnectInfo();
-
-
-
 //webapi
         AccountService accountService = new AccountService(dbService);
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
