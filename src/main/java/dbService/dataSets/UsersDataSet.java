@@ -1,8 +1,5 @@
 package dbService.dataSets;
 
-import javax.persistence.*;
-import java.io.Serializable;
-
 /**
  * @author v.chibrikov
  *         <p>
@@ -10,55 +7,33 @@ import java.io.Serializable;
  *         <p>
  *         Описание курса и лицензия: https://github.com/vitaly-chibrikov/stepic_java_webserver
  */
-@Entity
-@Table(name = "users")
-public class UsersDataSet implements Serializable { // Serializable Important to Hibernate!
-    private static final long serialVersionUID = -8706689714326132798L;
-
-    @Id
-    @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+@SuppressWarnings("UnusedDeclaration")
+public class UsersDataSet {
     private long id;
-
-    @Column(name = "name", unique = true, updatable = false)
     private String name;
+    private String password;
 
-    //Important to Hibernate!
-    @SuppressWarnings("UnusedDeclaration")
-    public UsersDataSet() {
+    public UsersDataSet(long id, String name, String password) {
+        this.id = id;
+        this.name = name;
+        this.password = password;
     }
 
-    @SuppressWarnings("UnusedDeclaration")
-    public UsersDataSet(long id, String name) {
-        this.setId(id);
-        this.setName(name);
-    }
-
-    public UsersDataSet(String name) {
-        this.setId(-1);
-        this.setName(name);
-    }
-
-    @SuppressWarnings("UnusedDeclaration")
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public long getId() {
         return id;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public String getPassword() {
+        return password;
     }
 
     @Override
     public String toString() {
-        return "UserDataSet{" +
+        return "UsersDataSet{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 '}';
