@@ -29,7 +29,7 @@ public class UsersDAO {
     }
 
     public UsersDataSet get(String name) throws SQLException {
-        return executor.execQuery("select * from users where user_name=" + name, result -> {
+        return executor.execQuery("select * from users where user_name='" + name + "'", result -> {
             result.next();
             return new UsersDataSet(result.getLong(1), result.getString(2), result.getString(3));
         });

@@ -42,7 +42,7 @@ public class DBService {
         try {
             connection.setAutoCommit(false);
             UsersDAO dao = new UsersDAO(connection);
-            dao.createTable();
+//            dao.createTable();
             dao.insertUser(name, password);
             connection.commit();
             return dao.getUserId(name);
@@ -64,6 +64,15 @@ public class DBService {
         UsersDAO dao = new UsersDAO(connection);
         try {
             dao.dropTable();
+        } catch (SQLException e) {
+            throw new DBException(e);
+        }
+    }
+
+    public void createTableUsers() throws DBException {
+        UsersDAO dao = new UsersDAO(connection);
+        try {
+            dao.createTable();
         } catch (SQLException e) {
             throw new DBException(e);
         }
