@@ -1,7 +1,7 @@
 package servlets;
 
 import accounts.AccountService;
-import accounts.UserProfile;
+import dbService.dataSets.UsersDataSet;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -28,8 +28,8 @@ public class SignInServlet extends HttpServlet {
             return;
         }
 
-        UserProfile profile = accountService.getUserByLogin(login);
-        if (profile == null || !profile.getPass().equals(pass)) {
+        UsersDataSet profile = accountService.get(login);
+        if (profile == null || !profile.getPassword().equals(pass)) {
             response.setContentType("text/html;charset=utf-8");
             response.getWriter().println("Unauthorized");
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
@@ -38,7 +38,7 @@ public class SignInServlet extends HttpServlet {
 
         accountService.addSession(request.getSession().getId(), profile);
         response.setContentType("text/html;charset=utf-8");
-        response.getWriter().println("Authorized: " + profile.getLogin());
+        response.getWriter().println("Authorized: " + profile.getName());
         response.setStatus(HttpServletResponse.SC_OK);
     }
 }

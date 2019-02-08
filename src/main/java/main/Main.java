@@ -24,7 +24,12 @@ import servlets.hello;
  */
 public class Main {
     public static void main(String[] args) throws Exception  {
+        //  DB
+        DBService dbService = new DBService();
+        dbService.printConnectInfo();
 
+
+//webapi
         AccountService accountService = new AccountService();
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
         context.addServlet(new ServletHolder(new hello()), "/");
@@ -45,19 +50,6 @@ public class Main {
         server.join();
 
 
-        //  DB
-        DBService dbService = new DBService();
-        dbService.printConnectInfo();
 
-        try {
-            long userId = dbService.addUser("tully");
-            System.out.println("Added user id: " + userId);
-
-            UsersDataSet dataSet = dbService.getUser(userId);
-            System.out.println("User data set: " + dataSet);
-
-        } catch (DBException e) {
-            e.printStackTrace();
-        }
     }
 }

@@ -2,6 +2,7 @@ package servlets;
 
 import accounts.AccountService;
 import accounts.UserProfile;
+import dbService.dataSets.UsersDataSet;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -27,9 +28,8 @@ public class SignUpServlet extends HttpServlet {
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             return;
         }
-        UserProfile profile = new UserProfile(login,pass,"email");
-        accountService.addNewUser(profile );
-//        accountService.addSession(request.getSession().getId(), profile);
+
+        accountService.addNewUser(login );
         response.setContentType("text/html;charset=utf-8");
 //        response.getWriter().println("Register:" + profile.getLogin());
         response.setStatus(HttpServletResponse.SC_OK);
