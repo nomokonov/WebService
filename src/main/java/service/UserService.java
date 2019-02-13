@@ -39,12 +39,12 @@ public class UserService {
         return null;
     }
 
-    public long addUser(String name) {
+    public long addUser(User  user) {
         try {
             Session session = sessionFactory.openSession();
             Transaction transaction = session.beginTransaction();
             UsersDAO dao = new UsersDAO(session);
-            long id = dao.insertUser(name);
+            long id = dao.insertUser(user);
             transaction.commit();
             session.close();
             return id;

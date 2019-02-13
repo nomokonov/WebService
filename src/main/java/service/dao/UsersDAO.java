@@ -39,7 +39,7 @@ public class UsersDAO {
         return ((User) criteria.add(Restrictions.eq("name", name)).uniqueResult()).getId();
     }
 
-    public long insertUser(String name) throws HibernateException {
-        return (Long) session.save(new User(name));
+    public long insertUser(User user) throws HibernateException {
+        return (Long) session.save(user);
     }
 }

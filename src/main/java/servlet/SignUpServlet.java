@@ -1,6 +1,7 @@
 package servlet;
 
 import service.UserService;
+import service.domain.User;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -23,11 +24,15 @@ public class SignUpServlet extends HttpServlet {
 
         if (login == null || pass == null) {
             response.setContentType("text/html;charset=utf-8");
+            response.getWriter().println("Register: bad request" );
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             return;
         }
 
-        userService.addUser(login );
+        User user = new User();
+        user.setName(login);
+        user.setPassword(pass);
+        userService.addUser(user );
         response.setContentType("text/html;charset=utf-8");
 //        response.getWriter().println("Register:" + profile.getLogin());
         response.setStatus(HttpServletResponse.SC_OK);
