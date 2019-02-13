@@ -1,17 +1,18 @@
+
 package main;
 
 
-import accounts.AccountService;
-import dbService.DBService;
+import config.DBconfig;
 import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.HandlerList;
 import org.eclipse.jetty.server.handler.ResourceHandler;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
-import servlets.SignInServlet;
-import servlets.SignUpServlet;
-import servlets.hello;
+import service.UserService;
+import servlet.SignInServlet;
+import servlet.SignUpServlet;
+import servlet.hello;
 
 /**
  * @author v.chibrikov
@@ -22,15 +23,12 @@ import servlets.hello;
  */
 public class Main {
     public static void main(String[] args) throws Exception  {
-        //  DB
-        DBService dbService = new DBService();
-        dbService.printConnectInfo();
-//webapi
-        AccountService accountService = new AccountService(dbService);
+
+        UserService userService = new UserService(new DBconfig().getSessionFactory());
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
         context.addServlet(new ServletHolder(new hello()), "/");
-        context.addServlet(new ServletHolder(new SignUpServlet(accountService)), "/signup");
-        context.addServlet(new ServletHolder(new SignInServlet(accountService)), "/signin");
+        context.addServlet(new ServletHolder(new SignUpServlet(userService)), "/signup");
+        context.addServlet(new ServletHolder(new SignInServlet(userService)), "/signin");
 
         ResourceHandler resource_handler = new ResourceHandler();
         resource_handler.setResourceBase("public_html");
