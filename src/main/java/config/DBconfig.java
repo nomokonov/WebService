@@ -9,7 +9,7 @@ import org.hibernate.service.ServiceRegistry;
 public class DBconfig {
 
     private static final String hibernate_show_sql = "true";
-    private static final String hibernate_hbm2ddl_auto = "create-drop";
+    private static final String hibernate_hbm2ddl_auto = "update";
 
     private final SessionFactory sessionFactory;
 

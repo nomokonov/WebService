@@ -32,7 +32,11 @@ public class UsersDAO {
         Query query = session.createQuery(hql);
         query.setParameter("paramName", name);
         List<User> users = query.list();
+        if ( users.isEmpty() ){
+            return null;
+        }
         return users.get(0);
+
     }
     public long getUserId(String name) throws HibernateException {
         Criteria criteria = session.createCriteria(User.class);
